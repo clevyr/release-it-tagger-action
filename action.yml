@@ -1,0 +1,12 @@
+name: 'release-it tagger action'
+description: 'Given a repo with a valid VERSION file, increment the version based on calver standards.'
+inputs:
+  pre-release:  # id of input
+    description: 'Pre-release ID, if needed'
+    required: false
+outputs:
+  version: # id of output
+    description: 'The updated version'
+runs:
+  using: 'node12'
+  main: 'index.js'

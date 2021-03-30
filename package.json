@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "release": "release-it --dry-run --ci"
+  },
+  "name": "release-it-tagger-action",
+  "main": "clevyr-calver-plugin.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clevyr/release-it-tagger-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clevyr/release-it-tagger-action/issues"
+  },
+  "homepage": "https://github.com/clevyr/release-it-tagger-action#readme",
+  "description": "",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "@release-it/bumper": "^2.0.0",
+    "calver": "^21.1.0",
+    "release-it": "^14.5.0"
+  }
+}
