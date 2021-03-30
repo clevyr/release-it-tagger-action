@@ -1,0 +1,21 @@
+{
+  "npm": {
+    "publish": false
+  },
+  "git": {
+    "tagName": "v${version}"
+  },
+  "plugins": {
+    "./clevyr-calver-plugin": {},
+    "@release-it/bumper": {
+      "in": {
+        "file": "VERSION",
+        "type": "text/plain"
+      },
+      "out": {
+        "file": "VERSION",
+        "type": "text/plain"
+      }
+    }
+  }
+}
