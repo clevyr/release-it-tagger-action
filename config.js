@@ -23,8 +23,7 @@ const config = {
 }
 
 // Adds directory path for local plugin dynamically
-const calverPluginPath = `${__dirname}/clevyr-calver-plugin`
+const calverPluginPath = `${__dirname}/clevyr-calver-plugin.js`;
 config["plugins"][calverPluginPath] = {};
 
 module.exports = config;
-

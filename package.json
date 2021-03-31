@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "release": "release-it --dry-run --ci"
-  },
   "name": "release-it-tagger-action",
   "main": "clevyr-calver-plugin.js",
   "repository": {
