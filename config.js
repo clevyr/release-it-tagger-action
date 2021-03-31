@@ -8,21 +8,21 @@ const config = {
     "git": {
         "tagName": "v${version}"
     },
-    "plugins": {
-        "@release-it/bumper": {
-            "in": {
-                "file": "VERSION",
-                "type": "text/plain"
-            },
-            "out": {
-                "file": "VERSION",
-                "type": "text/plain"
-            },
-        },
-    },
+    "plugins": {},
 };
 
-// Adds directory path for local plugin dynamically
+// Adds plugins with dynamically generated paths
+const bumperPluginPath = require.resolve('@release-it/bumper');
+config["plugins"][bumperPluginPath] = {
+    "in": {
+        "file": "VERSION",
+        "type": "text/plain"
+    },
+    "out": {
+        "file": "VERSION",
+        "type": "text/plain"
+    },
+};
 const calverPluginPath = `${__dirname}/clevyr-calver-plugin.js`;
 config["plugins"][calverPluginPath] = {};
 
