@@ -1,0 +1,56 @@
+name: Publish Action
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Install deps and build
+        run: npm ci && npm run build
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: ${{ contains(fromJSON('["refs/heads/dev", "refs/heads/master"]'), github.ref) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Configure Git
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - name: Tag new version
+        id: tag
+        uses: clevyr/release-it-tagger-action@v21.4.0-alpha.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          github-ref: ${{ github.ref }}
+          dev-branch: 'refs/heads/dev'
+          prod-branch: 'refs/heads/master'
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+      - name: Create a GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ steps.tag.outputs.version }}"
+          release_name: "Release ${{ steps.tag.outputs.new_tag }}"
