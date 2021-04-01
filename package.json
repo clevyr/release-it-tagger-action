@@ -1,6 +1,6 @@
 {
   "name": "release-it-tagger-action",
-  "main": "clevyr-calver-plugin.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/clevyr/release-it-tagger-action.git"
