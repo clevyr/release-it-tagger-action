@@ -39,7 +39,6 @@ function preReleaseType() {
 try {
     const preRelease = preReleaseType();
     const options = {
-        'dry-run': true,
         'ci': true,
         'preRelease': preRelease,
         "npm": { "publish": false },
