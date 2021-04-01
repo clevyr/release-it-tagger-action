@@ -1,8 +1,17 @@
 name: 'release-it tagger action'
 description: 'Given a repo with a valid VERSION file, increment the version based on calver standards.'
 inputs:
-  pre-release:  # id of input
-    description: 'Pre-release ID, if needed'
+  github-ref:
+    description: 'Github ref used to check for the correct pre-release tag'
+    required: true
+  dev-branch:
+    description: 'Github ref associated with the development environment'
+    required: false
+  stage-branch:
+    description: 'Github ref associated with the stage environment'
+    required: false
+  prod-branch:
+    description: 'Github ref associated with the production environment'
     required: false
 outputs:
   version: # id of output
