@@ -39,10 +39,6 @@ jobs:
         uses: clevyr/release-it-tagger-action@v21.4.0-alpha.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        with:
-          github-ref: ${{ github.ref }}
-          dev-branch: 'refs/heads/dev'
-          prod-branch: 'refs/heads/master'
       - name: Download build
         uses: actions/download-artifact@v2
         with:
