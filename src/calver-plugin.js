@@ -13,16 +13,17 @@ class CalverPlugin extends Plugin {
 
     getIncrementedVersion({latestVersion}) {
         calver.init(this.getFormat());
-        // TODO: This will currently cause the official release to start on version x.x.1 instead of x.x.0.
-        //       Should we fix? Doesn't look bad end-user.
-        const calverVersion = calver.inc(this.getFormat(), latestVersion, 'calendar');
+        try {
+            latestVersion = calver.inc(this.getFormat(), latestVersion, 'calendar');
+        } catch (e) {
+            // If the above failed, it was because current date is accurate, continue.
+        }
         const { preRelease } = this.config.options;
         let level = DEFAULT_LEVEL;
         if (preRelease) {
             level = `calendar.${preRelease}`;
         }
-
-        return calver.inc(this.getFormat(), calverVersion, level)
+        return calver.inc(this.getFormat(), latestVersion, level)
     }
 
     getIncrementedVersionCI() {
