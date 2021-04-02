@@ -42,12 +42,14 @@ try {
         'ci': true,
         'preRelease': preRelease,
         "npm": { "publish": false },
-        "git": { "tagName": "v${version}" },
+        "git": { "tagName": "v${version}", "commitMessage": ":pushpin: Release ${version}" },
         'plugins': {}
     };
     attachPlugins(options['plugins']);
     releaseIt(options).then(data => {
         core.setOutput("version", data.version);
+    }, error => {
+        core.setFailed(error);
     });
 } catch (error) {
     core.setFailed(error.message);
