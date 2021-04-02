@@ -3,7 +3,7 @@ description: 'Given a repo with a valid VERSION file, increment the version base
 inputs:
   github-ref:
     description: 'Github ref used to check for the correct pre-release tag'
-    required: true
+    required: false
   dev-branch:
     description: 'Github ref associated with the development environment'
     required: false
@@ -14,7 +14,7 @@ inputs:
     description: 'Github ref associated with the production environment'
     required: false
 outputs:
-  version: # id of output
+  version:
     description: 'The updated version'
 runs:
   using: 'node12'
