@@ -5,15 +5,15 @@ const releaseIt = require('release-it');
 const BRANCHES = {
     'dev': {
         key: 'dev-branch',
-        default: 'refs/head/dev',
+        default: 'refs/heads/dev',
     },
     'stage': {
         key: 'stage-branch',
-        default: 'refs/head/stage',
+        default: 'refs/heads/stage',
     },
     'prod': {
         key: 'prod-branch',
-        default: 'refs/head/master',
+        default: 'refs/heads/master',
     },
 };
 
