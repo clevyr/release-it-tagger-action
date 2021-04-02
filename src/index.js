@@ -37,14 +37,23 @@ function preReleaseType() {
     const stageBranch = sanitizeBranchInput(BRANCHES['stage']);
     const prodBranch = sanitizeBranchInput(BRANCHES['prod']);
 
+    core.info(`githubRef = ${githubRef}`);
+    core.info(`devBranch = ${devBranch}`);
+    core.info(`prodBranch = ${prodBranch}`);
+
+    const printPreRelease = (type) => core.info(`Using pre-release type: ${type}`);
     switch (githubRef) {
         case devBranch:
+            printPreRelease('alpha');
             return 'alpha';
         case stageBranch:
+            printPreRelease('beta');
             return 'beta';
         case prodBranch:
+            printPreRelease('false');
             return false;
         default:
+            printPreRelease('dev');
             return 'dev';
     }
 }
@@ -62,6 +71,7 @@ try {
     releaseIt(options).then(data => {
         core.setOutput("version", data.version);
     }, error => {
+        core.info(`Error: ${error}`);
         core.setFailed(error);
     });
 } catch (error) {
