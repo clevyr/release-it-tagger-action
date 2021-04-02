@@ -36,7 +36,7 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Tag new version
         id: tag
-        uses: clevyr/release-it-tagger-action@v21.4.0-alpha.0
+        uses: clevyr/release-it-tagger-action@logs
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Download build
