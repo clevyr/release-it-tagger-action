@@ -1,10 +1,21 @@
 const core = require('@actions/core');
+const github = require('@actions/github');
 const releaseIt = require('release-it');
 
-const GITHUB_REF_KEY = 'github-ref';
-const DEV_BRANCH_KEY = 'dev-branch';
-const STAGE_BRANCH_KEY = 'stage-branch';
-const PROD_BRANCH_KEY = 'prod-branch';
+const BRANCHES = {
+    'dev': {
+        key: 'dev-branch',
+        default: 'refs/heads/dev',
+    },
+    'stage': {
+        key: 'stage-branch',
+        default: 'refs/heads/stage',
+    },
+    'prod': {
+        key: 'prod-branch',
+        default: 'refs/heads/master',
+    },
+};
 
 function attachPlugins(pluginsArray) {
     const plugins = [
@@ -19,10 +30,12 @@ function attachPlugins(pluginsArray) {
 }
 
 function preReleaseType() {
-    const githubRef = core.getInput(GITHUB_REF_KEY);
-    const devBranch = core.getInput(DEV_BRANCH_KEY);
-    const stageBranch = core.getInput(STAGE_BRANCH_KEY);
-    const prodBranch = core.getInput(PROD_BRANCH_KEY);
+    const githubRef = github.context.ref;
+    const sanitizeBranchInput = (branch) =>  core.getInput(branch.key) === '' ?
+        branch.default : core.getInput(branch['key']);
+    const devBranch = sanitizeBranchInput(BRANCHES['dev']);
+    const stageBranch = sanitizeBranchInput(BRANCHES['stage']);
+    const prodBranch = sanitizeBranchInput(BRANCHES['prod']);
 
     switch (githubRef) {
         case devBranch:
