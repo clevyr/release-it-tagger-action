@@ -5,9 +5,8 @@ on:
     branches:
       - 'master'
       - 'dev'
-  check_suite:
     types:
-      - completed
+      - 'closed'
 
 jobs:
   tag:
