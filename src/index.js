@@ -68,7 +68,6 @@ try {
             "tagName": "v${version}",
             "commitMessage": ":pushpin: Release ${version}",
             "release": false,
-            "tag": false,
         },
         'plugins': {}
     };
