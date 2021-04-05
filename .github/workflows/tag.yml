@@ -1,0 +1,23 @@
+name: Tag Action
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+      - 'dev'
+    types:
+      - 'closed'
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure Git
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - name: Tag new version
+        id: tag
+        uses: clevyr/release-it-tagger-action@v24.4.1
