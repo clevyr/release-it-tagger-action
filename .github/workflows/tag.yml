@@ -21,3 +21,6 @@ jobs:
       - name: Tag new version
         id: tag
         uses: clevyr/release-it-tagger-action@v24.4.1
+        with:
+          github-create-tag: true
+          github-create-release: true
