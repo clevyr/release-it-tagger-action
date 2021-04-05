@@ -23,4 +23,4 @@ jobs:
         uses: clevyr/release-it-tagger-action@logs
         with:
           github-create-tag: true
-          github-create-release: true
+          github-create-release: false

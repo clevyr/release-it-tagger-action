@@ -3,11 +3,11 @@ description: 'Given a repo with a valid VERSION file, increment the version base
 inputs:
   github-create-tag:
     description: 'Used to create a release on github'
-    default: 'true'
-    required: true
+    default: true
+    required: false
   github-create-release:
-    description: 'Used to create a tage on github'
-    default: 'false'
+    description: 'Used to create a tags on github'
+    default: false
     required: false
   github-ref:
     description: 'Github branch used to check for the correct pre-release tag'
