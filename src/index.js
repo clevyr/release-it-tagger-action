@@ -16,6 +16,20 @@ const BRANCHES = {
         default: 'master',
     },
 };
+const sanitizeBranchInput = (branch) => core.getInput(branch.key) === '' ?
+    branch.default : core.getInput(branch.key);
+const TOGGLES = {
+    'github-create-tag': {
+        key: 'github-create-tag',
+        default: true,
+    },
+    'github-create-release': {
+        key: 'github-create-release',
+        default: false,
+    },
+}
+const sanitizeToggleInput = (toggle) => core.getInput(toggle.key) === '' ?
+    toggle.default : core.getInput(toggle.key).toLowerCase() === 'true';
 
 function attachPlugins(pluginsArray) {
     const plugins = [
@@ -31,8 +45,6 @@ function attachPlugins(pluginsArray) {
 
 function preReleaseType() {
     const githubRef = github.context.payload.pull_request.base.ref;
-    const sanitizeBranchInput = (branch) =>  core.getInput(branch.key) === '' ?
-        branch.default : core.getInput(branch['key']);
     const devBranch = sanitizeBranchInput(BRANCHES['dev']);
     const stageBranch = sanitizeBranchInput(BRANCHES['stage']);
     const prodBranch = sanitizeBranchInput(BRANCHES['prod']);
@@ -58,7 +70,8 @@ try {
         "git": {
             "tagName": "v${version}",
             "commitMessage": ":pushpin: Release ${version}",
-            "release": false,
+            "release": sanitizeToggleInput(TOGGLES["github-create-release"]),
+            "tag": sanitizeToggleInput(TOGGLES["github-create-tag"]),
         },
         'plugins': {}
     };
