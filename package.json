@@ -1,7 +1,7 @@
 {
   "name": "release-it-tagger-action",
   "scripts": {
-    "build": "ncc build index.js"
+    "build": "ncc build index.js -m"
   },
   "main": "index.js",
   "repository": {

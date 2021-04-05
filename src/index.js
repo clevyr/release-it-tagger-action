@@ -64,15 +64,19 @@ try {
         'ci': true,
         'preRelease': preRelease,
         "npm": { "publish": false },
-        "git": { "tagName": "v${version}", "commitMessage": ":pushpin: Release ${version}" },
+        "git": {
+            "tagName": "v${version}",
+            "commitMessage": ":pushpin: Release ${version}",
+            "release": false,
+            "tag": false,
+        },
         'plugins': {}
     };
     attachPlugins(options['plugins']);
     releaseIt(options).then(data => {
         core.setOutput("version", data.version);
     }, error => {
-        core.info(`Error: ${error}`);
-        core.setFailed(error);
+        core.setFailed(error.message);
     });
 } catch (error) {
     core.setFailed(error.message);
