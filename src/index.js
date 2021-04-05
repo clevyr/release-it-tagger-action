@@ -55,7 +55,11 @@ try {
         'ci': true,
         'preRelease': preRelease,
         "npm": { "publish": false },
-        "git": { "tagName": "v${version}", "commitMessage": ":pushpin: Release ${version}" },
+        "git": {
+            "tagName": "v${version}",
+            "commitMessage": ":pushpin: Release ${version}",
+            "release": false,
+        },
         'plugins': {}
     };
     attachPlugins(options['plugins']);
