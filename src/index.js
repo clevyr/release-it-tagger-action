@@ -5,15 +5,15 @@ const releaseIt = require('release-it');
 const BRANCHES = {
     'dev': {
         key: 'dev-branch',
-        default: 'refs/heads/dev',
+        default: 'dev',
     },
     'stage': {
         key: 'stage-branch',
-        default: 'refs/heads/stage',
+        default: 'stage',
     },
     'prod': {
         key: 'prod-branch',
-        default: 'refs/heads/master',
+        default: 'master',
     },
 };
 
@@ -30,7 +30,7 @@ function attachPlugins(pluginsArray) {
 }
 
 function preReleaseType() {
-    const githubRef = github.context.ref;
+    const githubRef = github.context.payload.pull_request.base.ref;
     const sanitizeBranchInput = (branch) =>  core.getInput(branch.key) === '' ?
         branch.default : core.getInput(branch['key']);
     const devBranch = sanitizeBranchInput(BRANCHES['dev']);
