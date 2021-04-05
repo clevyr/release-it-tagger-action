@@ -67,8 +67,8 @@ try {
         "git": {
             "tagName": "v${version}",
             "commitMessage": ":pushpin: Release ${version}",
-            "release": core.getInput("git-create-release").toUpper() === 'true',
-            "tag": core.getInput("git-create-tag").toUpper() === 'true',
+            "release": (core.getInput("git-create-release")).toUpperCase() === 'true',
+            "tag": core.getInput("git-create-tag").toUpperCase() === 'true',
         },
         'plugins': {}
     };
