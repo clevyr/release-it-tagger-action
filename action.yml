@@ -4,9 +4,9 @@ inputs:
   github-create-tag:
     description: 'Used to create a release on github'
     default: 'true'
-    required: true
+    required: false
   github-create-release:
-    description: 'Used to create a tage on github'
+    description: 'Used to create a tag on github'
     default: 'false'
     required: false
   github-ref:

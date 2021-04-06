@@ -67,7 +67,7 @@ function isLocal() {
 }
 
 function writeVersionInfo() {
-    return false;
+    return true;
 }
 
 try {
@@ -75,19 +75,19 @@ try {
     const options = {
         'ci': true,
         'preRelease': preRelease,
-        "npm": { "publish": false },
-        "git": {
-            "tagName": "v${version}",
-            "commitMessage": ":pushpin: Release ${version}",
-            "release": writeVersionInfo() && sanitizeToggleInput(TOGGLES["github-create-release"]),
-            "tag": writeVersionInfo() && sanitizeToggleInput(TOGGLES["github-create-tag"]),
-            "commit": writeVersionInfo(),
+        'npm': { 'publish': false },
+        'git': {
+            'tagName': 'v${version}',
+            'commitMessage': ':pushpin: Release ${version}',
+            'release': writeVersionInfo() && sanitizeToggleInput(TOGGLES['github-create-release']) || false,
+            'tag': writeVersionInfo() && sanitizeToggleInput(TOGGLES['github-create-tag']) || true,
+            'commit': writeVersionInfo(),
         },
         'plugins': {}
     };
     attachPlugins(options['plugins']);
     releaseIt(options).then(data => {
-        core.setOutput("version", data.version);
+        core.setOutput('version', data.version);
     }, error => {
         core.setFailed(error.message);
     });
