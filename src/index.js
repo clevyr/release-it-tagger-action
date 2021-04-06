@@ -44,7 +44,7 @@ function attachPlugins(pluginsArray) {
 }
 
 function preReleaseType() {
-    const githubRef = github.context.payload.pull_request.base.ref;
+    const githubRef = !isLocal() && github.context.payload.pull_request.base.ref;
     const devBranch = sanitizeBranchInput(BRANCHES['dev']);
     const stageBranch = sanitizeBranchInput(BRANCHES['stage']);
     const prodBranch = sanitizeBranchInput(BRANCHES['prod']);
@@ -59,6 +59,10 @@ function preReleaseType() {
         default:
             return 'dev';
     }
+}
+
+function isLocal() {
+    return isNaN(github.context.runId);
 }
 
 try {
