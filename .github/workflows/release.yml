@@ -7,32 +7,16 @@ on:
       - dev
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install deps and build
-        run: npm ci && npm run build
-      - name: Upload build
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist/
-
   release:
     runs-on: ubuntu-latest
-    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Tag new version
         id: tag
         uses: clevyr/release-it-tagger-action@logs
-      - name: Download build
-        uses: actions/download-artifact@v2
         with:
-          name: dist
+          build: "npm ci && npm run build"
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:

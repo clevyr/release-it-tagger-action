@@ -44,6 +44,12 @@ function attachPlugins(pluginsArray) {
     }
 }
 
+function attachHooks(hooksArray) {
+    if (core.getInput('build')) {
+        hooksArray['after:bump'] = core.getInput('build');
+    }
+}
+
 function preReleaseType() {
     const githubRef = !isLocal() && github.context.ref;
     const devBranch = sanitizeBranchInput(BRANCHES['dev']);
@@ -83,9 +89,11 @@ try {
             'tag': writeVersionInfo() && sanitizeToggleInput(TOGGLES['github-create-tag']) || true,
             'commit': writeVersionInfo(),
         },
-        'plugins': {}
+        'hooks': {},
+        'plugins': {},
     };
     attachPlugins(options['plugins']);
+    attachHooks(options['hooks']);
     releaseIt(options).then(data => {
         core.setOutput('version', data.version);
     }, error => {

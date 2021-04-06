@@ -1,6 +1,9 @@
 name: 'release-it tagger action'
 description: 'Given a repo with a valid VERSION file, increment the version based on calver standards.'
 inputs:
+  build:
+    description: 'Command to pass to build the project. Warning, this will commit the build to the repository!'
+    required: false
   github-create-tag:
     description: 'Used to create a release on github'
     default: 'true'
