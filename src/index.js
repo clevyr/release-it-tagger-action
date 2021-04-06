@@ -6,15 +6,15 @@ const releaseIt = require('release-it');
 const BRANCHES = {
     'dev': {
         key: 'dev-branch',
-        default: 'dev',
+        default: 'refs/heads/dev',
     },
     'stage': {
         key: 'stage-branch',
-        default: 'stage',
+        default: 'refs/heads/stage',
     },
     'prod': {
         key: 'prod-branch',
-        default: 'master',
+        default: 'refs/heads/master',
     },
 };
 const sanitizeBranchInput = (branch) => core.getInput(branch.key) === '' ?
@@ -45,7 +45,7 @@ function attachPlugins(pluginsArray) {
 }
 
 function preReleaseType() {
-    const githubRef = !isLocal() && github.context.payload.pull_request.base.ref;
+    const githubRef = !isLocal() && github.context.ref;
     const devBranch = sanitizeBranchInput(BRANCHES['dev']);
     const stageBranch = sanitizeBranchInput(BRANCHES['stage']);
     const prodBranch = sanitizeBranchInput(BRANCHES['prod']);
