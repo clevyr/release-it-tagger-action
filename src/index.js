@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const git = require('simple-git');
 const releaseIt = require('release-it');
 
 const BRANCHES = {
@@ -65,6 +66,10 @@ function isLocal() {
     return isNaN(github.context.runId);
 }
 
+function writeVersionInfo() {
+    return false;
+}
+
 try {
     const preRelease = preReleaseType();
     const options = {
@@ -74,8 +79,9 @@ try {
         "git": {
             "tagName": "v${version}",
             "commitMessage": ":pushpin: Release ${version}",
-            "release": sanitizeToggleInput(TOGGLES["github-create-release"]),
-            "tag": sanitizeToggleInput(TOGGLES["github-create-tag"]),
+            "release": writeVersionInfo() && sanitizeToggleInput(TOGGLES["github-create-release"]),
+            "tag": writeVersionInfo() && sanitizeToggleInput(TOGGLES["github-create-tag"]),
+            "commit": writeVersionInfo(),
         },
         'plugins': {}
     };
