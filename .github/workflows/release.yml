@@ -2,8 +2,9 @@ name: Release Action
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - master
+      - dev
 
 jobs:
   build:
@@ -25,20 +26,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Tag new version
+        id: tag
+        uses: clevyr/release-it-tagger-action@v24.4.1
       - name: Download build
         uses: actions/download-artifact@v2
         with:
           name: dist
-      - name: Get version
-        id: version
-        run: |
-          version_file="VERSION"
-          version=`cat "$version_file"`
-          echo ::set-output name=version::"$version"
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v${{ steps.version.outputs.version }}"
-          release_name: "Release ${{ steps.version.outputs.version }}"
+          tag_name: "v${{ steps.tag.outputs.version }}"
+          release_name: "Release ${{ steps.tag.outputs.version }}"
