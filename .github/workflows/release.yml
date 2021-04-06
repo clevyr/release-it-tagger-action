@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Tag new version
         id: tag
-        uses: clevyr/release-it-tagger-action@v24.4.1
+        uses: clevyr/release-it-tagger-action@logs
       - name: Download build
         uses: actions/download-artifact@v2
         with:
