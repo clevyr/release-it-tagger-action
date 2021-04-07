@@ -72,22 +72,31 @@ function isLocal() {
     return isNaN(github.context.runId);
 }
 
-function writeVersionInfo() {
-    return true;
+let _hasBeenTagged;
+function hasBeenTagged() {
+    if (typeof _hasBeenTagged !== 'undefined') return _hasBeenTagged;
+    const { gitDescribeSync } = require('git-describe');
+    const describe = gitDescribeSync(null, {
+        requireAnnotated: true,
+        customArguments: ['--contains', 'HEAD'],
+    });
+    _hasBeenTagged = describe.tag !== null;
+    console.log('_writeVersionInfo: ', _hasBeenTagged);
+    return _hasBeenTagged;
 }
 
 try {
     const preRelease = preReleaseType();
     const options = {
+        'dry-run': hasBeenTagged(),
         'ci': true,
         'preRelease': preRelease,
         'npm': { 'publish': false },
         'git': {
             'tagName': 'v${version}',
             'commitMessage': ':pushpin: Release ${version}',
-            'release': writeVersionInfo() && sanitizeToggleInput(TOGGLES['github-create-release']) || false,
-            'tag': writeVersionInfo() && sanitizeToggleInput(TOGGLES['github-create-tag']) || true,
-            'commit': writeVersionInfo(),
+            'release': sanitizeToggleInput(TOGGLES['github-create-release']) || false,
+            'tag': true,
         },
         'hooks': {},
         'plugins': {},
