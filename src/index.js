@@ -1,6 +1,5 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const git = require('simple-git');
 const releaseIt = require('release-it');
 
 const BRANCHES = {
@@ -68,8 +67,19 @@ function preReleaseType() {
     }
 }
 
+let _local;
 function isLocal() {
-    return isNaN(github.context.runId);
+    if (typeof _local !== 'undefined') return _local;
+    const local = isNaN(github.context.runId);
+    if (!local) {
+        // Initialize user name and email for github push
+        const actor = process.env['GITHUB_ACTOR'];
+        require('simple-git')()
+            .addConfig('user.name', actor)
+            .addConfig('user.email', `${actor}@users.noreply.github.com`);
+    }
+    _local = local;
+    return local;
 }
 
 let _hasBeenTagged;
