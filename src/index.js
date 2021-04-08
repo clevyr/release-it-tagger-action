@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const releaseIt = require('release-it');
 
+const BUILD_INPUT = () => core.getInput('build');
+
 const BRANCHES = {
     'dev': {
         key: 'dev-branch',
@@ -19,12 +21,8 @@ const BRANCHES = {
 const sanitizeBranchInput = (branch) => core.getInput(branch.key) === '' ?
     branch.default : core.getInput(branch.key);
 const TOGGLES = {
-    'github-create-tag': {
-        key: 'github-create-tag',
-        default: true,
-    },
     'github-create-release': {
-        key: 'github-create-release',
+        key: 'github-release',
         default: false,
     },
 }
@@ -44,8 +42,8 @@ function attachPlugins(pluginsArray) {
 }
 
 function attachHooks(hooksArray) {
-    if (core.getInput('build')) {
-        hooksArray['after:bump'] = core.getInput('build');
+    if (BUILD_INPUT()) {
+        hooksArray['after:bump'] = BUILD_INPUT();
     }
 }
 
@@ -105,8 +103,11 @@ try {
         'git': {
             'tagName': 'v${version}',
             'commitMessage': ':pushpin: Release ${version}',
-            'release': sanitizeToggleInput(TOGGLES['github-create-release']) || false,
             'tag': true,
+            'addUntrackedFiles': BUILD_INPUT() !== '',
+        },
+        'github': {
+            'release': sanitizeToggleInput(TOGGLES['github-create-release']) || false,
         },
         'hooks': {},
         'plugins': {},

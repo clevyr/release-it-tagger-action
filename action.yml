@@ -4,11 +4,7 @@ inputs:
   build:
     description: 'Command to pass to build the project. Warning, this will commit the build to the repository!'
     required: false
-  github-create-tag:
-    description: 'Used to create a release on github'
-    default: 'true'
-    required: false
-  github-create-release:
+  github-release:
     description: 'Used to create a tag on github'
     default: 'false'
     required: false

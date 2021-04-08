@@ -17,10 +17,8 @@ jobs:
       - name: Tag new version
         id: tag
         uses: clevyr/release-it-tagger-action@logs
-      - name: Create a GitHub release
-        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v${{ steps.tag.outputs.version }}"
-          release_name: "Release ${{ steps.tag.outputs.version }}"
+          build: npm ci && npm run build
+          github-release: true
