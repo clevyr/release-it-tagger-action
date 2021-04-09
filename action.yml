@@ -1,17 +1,24 @@
 name: 'release-it tagger action'
 description: 'Given a repo with a valid VERSION file, increment the version based on calver standards.'
 inputs:
+  build:
+    description: 'Command to pass to build the project. Warning, this will commit the build to the repository!'
+    required: false
+  github-release:
+    description: 'Used to create a tag on github'
+    default: 'false'
+    required: false
   github-ref:
-    description: 'Github ref used to check for the correct pre-release tag'
+    description: 'Github branch used to check for the correct pre-release tag'
     required: false
   dev-branch:
-    description: 'Github ref associated with the development environment'
+    description: 'Github branch associated with the development environment'
     required: false
   stage-branch:
-    description: 'Github ref associated with the stage environment'
+    description: 'Github branch associated with the stage environment'
     required: false
   prod-branch:
-    description: 'Github ref associated with the production environment'
+    description: 'Github branch associated with the production environment'
     required: false
 outputs:
   version:
