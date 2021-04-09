@@ -43,7 +43,7 @@ function attachPlugins(pluginsArray) {
 
 function attachHooks(hooksArray) {
     if (BUILD_INPUT()) {
-        hooksArray['after:bump'] = BUILD_INPUT();
+        hooksArray['before:git:bump'] = BUILD_INPUT();
     }
 }
 
