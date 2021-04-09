@@ -88,8 +88,8 @@ function hasBeenTagged() {
         requireAnnotated: true,
         customArguments: ['--contains', 'HEAD'],
     });
-    _hasBeenTagged = describe.tag !== null;
-    console.log('_writeVersionInfo: ', _hasBeenTagged);
+    const tagRegex = /^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}/g
+    _hasBeenTagged = tagRegex.test(describe.raw);
     return _hasBeenTagged;
 }
 
