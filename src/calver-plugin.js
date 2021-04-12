@@ -12,6 +12,7 @@ class CalverPlugin extends Plugin {
     }
 
     getIncrementedVersion({latestVersion}) {
+        latestVersion = latestVersion === '0.0.0' ? '1.1.1' : latestVersion;
         calver.init(this.getFormat());
         try {
             latestVersion = calver.inc(this.getFormat(), latestVersion, 'calendar');
@@ -19,10 +20,7 @@ class CalverPlugin extends Plugin {
             // If the above failed, it was because current date is accurate, continue.
         }
         const { preRelease } = this.config.options;
-        let level = DEFAULT_LEVEL;
-        if (preRelease) {
-            level = `calendar.${preRelease}`;
-        }
+        const level = preRelease || DEFAULT_LEVEL;
         return calver.inc(this.getFormat(), latestVersion, level)
     }
 

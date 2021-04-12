@@ -31,7 +31,6 @@ const sanitizeToggleInput = (toggle) => core.getInput(toggle.key) === '' ?
 
 function attachPlugins(pluginsArray) {
     const plugins = [
-        require('./bumper-plugin-addon'),
         require('./calver-plugin-addon'),
     ];
     for(const i in plugins) {
@@ -99,7 +98,7 @@ try {
         'dry-run': hasBeenTagged(),
         'ci': true,
         'preRelease': preRelease,
-        'npm': { 'publish': false },
+        'npm': false,
         'git': {
             'tagName': 'v${version}',
             'commitMessage': ':pushpin: Release ${version}',
