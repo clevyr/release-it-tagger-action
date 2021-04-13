@@ -19,6 +19,6 @@ jobs:
         uses: clevyr/release-it-tagger-action@logs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          build: npm ci && npm run build
-#          github-release: true
+        with:
+          build: npm ci && npm run build
+          github-release: true
