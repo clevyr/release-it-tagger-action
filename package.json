@@ -19,12 +19,10 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
-    "@release-it/bumper": "^2.0.0",
     "@vercel/ncc": "^0.27.0",
     "calver": "^21.1.0",
     "git-describe": "^4.0.4",
     "release-it": "^14.5.0",
     "simple-git": "^2.37.0"
-  },
-  "version": "21.4.1"
+  }
 }
