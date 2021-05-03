@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - name: Tag new version
         id: tag
-        uses: clevyr/release-it-tagger-action@v21.4.1
+        uses: clevyr/release-it-tagger-action@dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
