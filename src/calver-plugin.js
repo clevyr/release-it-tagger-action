@@ -15,10 +15,12 @@ class CalverPlugin extends Plugin {
     getIncrementedVersion({latestVersion}) {
         if (this.config.options['dry-run']) return this.config.contextOptions.latestTag.replace(/^v/g, '');
         calver.init(this.getFormat());
-        try {
-            latestVersion = calver.inc(this.getFormat(), latestVersion, 'calendar');
-        } catch (e) {
-            // If the above failed, it was because current date is accurate, continue.
+        if (this.config.options.preRelease === false) {
+            try {
+                latestVersion = calver.inc(this.getFormat(), latestVersion, 'calendar');
+            } catch (e) {
+                // If the above failed, it was because current date is accurate, continue.
+            }
         }
         const { preRelease } = this.config.options;
         const level = preRelease || DEFAULT_LEVEL;
